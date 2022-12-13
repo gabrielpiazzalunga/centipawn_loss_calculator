@@ -55,8 +55,13 @@ dob_dict = { "Carlsen": datetime(1990,11,30),
 
 for key in dob_dict:
     # if (dob_dict[df['White Name']]):
-    df['Age White'] = np.where(df['White Name'].str.contains(key), (df['Date'] - dob_dict[key]).dt.days, 0)
-    df['Age Black'] = np.where(df['Black Name'].str.contains(key), (df['Date'] - dob_dict[key]).dt.days, 0)
+    print(key)
+    # print(df.query('White Name == "Caruana, Fabiano"').first)
+    df1 = df[df['White Name'].str.contains(key)].copy().head(5)
+    print(df1)
+    print(dob_dict[key])
+    df['Age White'] = np.where(df['White Name'].str.contains(key), (df['Date'] - dob_dict[key]).dt.days, df['Age White'] )
+    df['Age Black'] = np.where(df['Black Name'].str.contains(key), (df['Date'] - dob_dict[key]).dt.days, df['Age Black'])
 
 df.to_pickle('games_centipawn_age.pkl')
 df.to_csv('teste.csv')
